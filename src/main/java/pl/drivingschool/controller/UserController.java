@@ -6,9 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.drivingschool.entity.Activities;
-import pl.drivingschool.entity.Participant;
+import pl.drivingschool.entity.User;
 import pl.drivingschool.repository.ActivitiesRepository;
-import pl.drivingschool.repository.ParticipantRepository;
+import pl.drivingschool.repository.UserRepository;
 
 import javax.validation.Valid;
 import javax.validation.Validator;
@@ -18,11 +18,11 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/participant")
-public class ParticipantController {
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
-    ParticipantRepository participantRepository;
+    UserRepository userRepository;
 
 
     @Autowired
@@ -49,34 +49,34 @@ public class ParticipantController {
     @GetMapping("/add")
     public String showParticipant(Model model) {
 
-        model.addAttribute("participant", new Participant());
+        model.addAttribute("user", new User());
 
-        return "participant";
+        return "user";
 
     }
 
     @PostMapping("/add")
-    public String addParticipant(@ModelAttribute @Valid Participant participant, @ModelAttribute  Activities activities, BindingResult bindingResult) {
+    public String addParticipant(@ModelAttribute @Valid User user, @ModelAttribute  Activities activities, BindingResult bindingResult) {
 
-        Participant participant1 =  participantRepository.findByEmail(participant.getEmail());
+        User user1 =  userRepository.findByEmail(user.getEmail());
 
-        if (participant1 != null) {
+        if (user1 != null) {
             bindingResult.rejectValue("email","error.email","Juz istnieje taki uczestnik");
 
-            return "participant";
+            return "user";
 
         }else if (bindingResult.hasErrors()){
 
-            return "participant";
+            return "user";
         }
 
         else {
 
-//            participant.setPassword(BCrypt.hashpw(participant.getPassword(), BCrypt.gensalt()));
-            participantRepository.save(participant);
+//            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            userRepository.save(user);
 
             activitiesRepository.save(activities);
-            participant.setEnabled(1);
+            user.setEnabled(1);
 
             return "home";
 
@@ -90,9 +90,9 @@ public class ParticipantController {
     @GetMapping("/all")
     public String allParticipants(Model model) {
 
-        List<Participant> participantList = participantRepository.findAll();
-        model.addAttribute("participants", participantList);
+        List<User> userList = userRepository.findAll();
+        model.addAttribute("user", userList);
 
-        return "participantList";
+        return "userList";
     }
 }

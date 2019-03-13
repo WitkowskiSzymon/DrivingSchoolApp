@@ -11,11 +11,11 @@
     <%@ include file="../views/header.jsp" %>
 </head>
 <body>
-<form:form method="post" modelAttribute="participant">
+<form:form method="post" modelAttribute="user">
 
     <label for="usernameId">Login:</label>
-    <form:input type="text" path="participantName" id="usernameId" class="form-control"/>
-    <form:errors path="participantName" element="div" cssClass="error"/>
+    <form:input type="text" path="userName" id="usernameId" class="form-control"/>
+    <form:errors path="userName" element="div" cssClass="error"/>
 
 
     <label for="passwordId">Hasło:</label>
@@ -24,10 +24,10 @@
 
 
 
-    <label for="firstNameId">Imię</label>
+    <label for="nameId">Imię</label>
 
-    <form:input type="text" path="firstName" id="firstNameId" class="form-control"/>
-    <form:errors path="firstName" element="div" cssClass="error"/>
+    <form:input type="text" path="name" id="nameId" class="form-control"/>
+    <form:errors path="name" element="div" cssClass="error"/>
 
 
     <label for="lastNameId">Nazwisko</label>

@@ -14,25 +14,27 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "PARTICIPANTS")
-public class Participant {
+//@Data
+//@Builder
+public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+//    @Builder.Default
     @ManyToMany
-    @JoinTable(name="User_role", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name="role_id"))
+    @JoinTable(name="User_Role", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set <Role>roles = new HashSet<Role>();
 
     @NotEmpty
     @Column(unique = true)
     @Size(min = 4)
-    private String participantName;
+    private String userName;
 
     @NotBlank
     @Size(min = 3)
-    private String firstName;
+    private String name;
 
     @NotBlank
     @Size(min = 4)
@@ -52,26 +54,15 @@ public class Participant {
     @CreationTimestamp
     private LocalDate created;
 
+//    @Getter
     @Transient
     private String fullName;
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     private boolean active;
 
-
-    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Activities> activities ;
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
 
     public Long getId() {
         return id;
@@ -81,12 +72,28 @@ public class Participant {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLastName() {
@@ -97,6 +104,14 @@ public class Participant {
         this.lastName = lastName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -105,12 +120,12 @@ public class Participant {
         this.email = email;
     }
 
-    public String getFullName() {
-        return firstName + " " + lastName;
+    public int getEnabled() {
+        return enabled;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
     }
 
     public LocalDate getCreated() {
@@ -121,28 +136,20 @@ public class Participant {
         this.created = created;
     }
 
-    public String getParticipantName() {
-        return participantName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setParticipantName(String participantName) {
-        this.participantName = participantName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getPassword() {
-        return password;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(int enabled) {
-        this.enabled = enabled;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public List<Activities> getActivities() {
@@ -157,8 +164,8 @@ public class Participant {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + participantName + '\'' +
-                ", firstName='" + firstName + '\'' +
+                ", username='" + userName + '\'' +
+                ", firstName='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +

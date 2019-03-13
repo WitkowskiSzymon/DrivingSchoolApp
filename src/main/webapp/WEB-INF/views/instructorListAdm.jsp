@@ -34,10 +34,10 @@
                 <a class="nav-link" href="/admin">Home </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/participantAdm/add">Dodaj kursanta </a>
+                <a class="nav-link" href="/admin/userAdm/add">Dodaj kursanta </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/participantAdm/all">Lista kursantów </a>
+                <a class="nav-link" href="/admin/userAdm/all">Lista kursantów </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/admin/instructor/add">Dodaj instruktora </a>

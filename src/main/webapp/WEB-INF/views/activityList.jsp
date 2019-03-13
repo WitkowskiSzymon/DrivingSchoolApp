@@ -39,7 +39,7 @@
                     <li><i class="fa fa-check"></i> Szkolenie na własnym samochodzie</li>
                     <li><i class="fa fa-check"></i>Kawa,materiały szkoleniowe</li>
                 </ul>
-                    <a href="/participant/add" class="pricingTable-signup">Zapisz się!</a>
+                    <a href="/user/add" class="pricingTable-signup">Zapisz się!</a>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
@@ -55,7 +55,7 @@
                         <li><i class="fa fa-check"></i> Szkolenie na samochodzie klasy WRC</li>
                         <li><i class="fa fa-check"></i>Kawa, obiad, kombinezor wyścigowy</li>
                     </ul>
-                    <a href="/participant/add" class="pricingTable-signup">Zapisz się!</a>
+                    <a href="/user/add" class="pricingTable-signup">Zapisz się!</a>
                 </div>
             </div>
 
@@ -72,7 +72,7 @@
                         <li><i class="fa fa-check"></i> Szkolenie na samochodzie klasy GT3</li>
                         <li><i class="fa fa-check"></i>Kawa ,obiad, kombinezor, impreza integracyjna</li>
                     </ul>
-                    <a href="/participant/add" class="pricingTable-signup">Zapisz się!</a>
+                    <a href="/user/add" class="pricingTable-signup">Zapisz się!</a>
                 </div>
                 <br>
                 <br>

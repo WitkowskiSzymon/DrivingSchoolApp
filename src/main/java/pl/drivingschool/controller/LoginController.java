@@ -8,8 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.drivingschool.entity.Participant;
-import pl.drivingschool.repository.ParticipantRepository;
+import pl.drivingschool.entity.User;
+import pl.drivingschool.repository.UserRepository;
 
 import javax.validation.Valid;
 
@@ -17,21 +17,21 @@ import javax.validation.Valid;
 public class LoginController {
 
     @Autowired
-    private ParticipantRepository participantRepository;
+    private UserRepository userRepository;
 
     @GetMapping("/login")
     public String login(Model model) {
-        model.addAttribute("participant", new Participant());
+        model.addAttribute("user", new User());
         return "login";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute @Valid Participant participant, Model model, BindingResult result) {
+    public String login(@ModelAttribute @Valid User user, Model model, BindingResult result) {
         if (result.hasErrors()) {
             return "login";
         }
-        Participant participantDb = participantRepository.findByParticipantName(participant.getParticipantName());
-        boolean isLogged = participantDb != null && BCrypt.checkpw(participant.getPassword(), participantDb.getPassword());
+        User userDb = userRepository.findByUserName(user.getUserName());
+        boolean isLogged = userDb != null && BCrypt.checkpw(user.getPassword(), userDb.getPassword());
         if (!isLogged) {
             model.addAttribute("loginFailed", true);
             return "login";

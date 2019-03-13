@@ -26,7 +26,7 @@
                     <a class="nav-link" href="/instructor/all">Instruktorzy </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/participant/all">Kursanci </a>
+                    <a class="nav-link" href="/user/all">Kursanci </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/about">O Nas </a>
@@ -43,7 +43,7 @@
         <div class="login">
             <a href="/login" class="login_btn"><i class="fa fa-user"></i><span class="d-none d-md-inline-block" style="padding-right: inherit">Zaloguj się </span></a></div> &nbsp&nbsp
         <div class="signin">
-            <a href="/participant/add" class="signup-btn"><i class="fa fa-user"></i><span class="d-none d-md-inline-block">Zarejestruj się</span></a></div>
+            <a href="/user/add" class="signup-btn"><i class="fa fa-user"></i><span class="d-none d-md-inline-block">Zarejestruj się</span></a></div>
 
     </nav>
 

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.drivingschool.ValidationError;
-import pl.drivingschool.entity.Participant;
+import pl.drivingschool.entity.User;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
@@ -21,11 +21,11 @@ public class ValidationController {
 
     @GetMapping("/validate")
     public String validate(Model model) {
-        Participant participant = new Participant();
-        Set<ConstraintViolation<Participant>> errors = validator.validate(participant);
+        User user = new User();
+        Set<ConstraintViolation<User>> errors = validator.validate(user);
 
         List<ValidationError> validationErrors = new ArrayList<>();
-        for (ConstraintViolation<Participant> error : errors) {
+        for (ConstraintViolation<User> error : errors) {
             ValidationError validationError = new ValidationError(error.getPropertyPath().toString(), error.getMessage());
             validationErrors.add(validationError);
         }

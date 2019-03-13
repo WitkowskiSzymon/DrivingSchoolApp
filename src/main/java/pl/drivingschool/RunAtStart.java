@@ -1,28 +1,26 @@
 package pl.drivingschool;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import pl.drivingschool.entity.Participant;
 import pl.drivingschool.entity.Role;
-import pl.drivingschool.repository.ParticipantRepository;
+import pl.drivingschool.entity.User;
 import pl.drivingschool.repository.RoleRepository;
+import pl.drivingschool.repository.UserRepository;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 
 @Component
 public class RunAtStart {
 
 
-    private ParticipantRepository participantRepository;
+    private UserRepository userRepository;
 
     private RoleRepository roleRepository;
 
     @Autowired
-    public RunAtStart(ParticipantRepository participantRepository, RoleRepository roleRepository) {
-        this.participantRepository = participantRepository;
+    public RunAtStart(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
 
@@ -30,26 +28,26 @@ public class RunAtStart {
     public void runAtStart(){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        Participant part1 =new Participant();
-        Participant part2 = new Participant();
+        User user1 =new User();
+        User user2 = new User();
 
-        part1.setFirstName("Adam");
-        part1.setLastName("Kowal");
-        part1.setEmail("a.kowal@gmail.com");
-        part1.setPassword(bCryptPasswordEncoder.encode("Haslo12"));
-        part1.setCreated(LocalDate.of(2019,03,07));
-        part1.setParticipantName("kowala12");
-        part1.setFullName("Adam Kowal");
-        part1.setActive(true);
+        user1.setName("Adam");
+        user1.setLastName("Kowal");
+        user1.setEmail("a.kowal@gmail.com");
+        user1.setPassword(bCryptPasswordEncoder.encode("Haslo12"));
+        user1.setCreated(LocalDate.of(2019,03,07));
+        user1.setUserName("kowala12");
+        user1.setFullName("Adam Kowal");
+        user1.setActive(true);
 
-        part2.setFirstName("Adam1");
-        part2.setLastName("Kowal1");
-        part2.setEmail("a.kowal1@gmail.com");
-        part2.setPassword(bCryptPasswordEncoder.encode("Haslo22"));
-        part2.setCreated(LocalDate.of(2019,03,06));
-        part2.setParticipantName("kowala22");
-        part2.setFullName("Adam Kowal1");
-        part2.setActive(true);
+        user2.setName("Adam1");
+        user2.setLastName("Kowal1");
+        user2.setEmail("a.kowal1@gmail.com");
+        user2.setPassword(bCryptPasswordEncoder.encode("Haslo22"));
+        user2.setCreated(LocalDate.of(2019,03,06));
+        user2.setUserName("kowala22");
+        user2.setFullName("Adam Kowal1");
+        user2.setActive(true);
 
         Role role1 = new Role();
         Role role2 = new Role();
@@ -60,13 +58,13 @@ public class RunAtStart {
         roleRepository.save(role1);
         roleRepository.save(role2);
 
-        part1.getRoles().add(role1);
-        part1.getRoles().add(role2);
+        user1.getRoles().add(role1);
+        user1.getRoles().add(role2);
 
-        part2.getRoles().add(role2);
+        user2.getRoles().add(role2);
 
-        participantRepository.save(part1);
-        participantRepository.save(part2);
+        userRepository.save(user1);
+        userRepository.save(user2);
 
 
 

@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
 <body>
-<form:form name="form" method="post" modelAttribute="participant" action="/login">
+<form:form name="form" method="post" modelAttribute="user" action="/login">
     <a href="/">Strona Główna</a>
     <div class="container">
         <div class="d-flex justify-content-center h-50">
@@ -48,10 +48,10 @@
 
 
                             <label for="usernameId"></label>
-                            <form:input type="text" name="participant" path="participantName" id="usernameId"
+                            <form:input type="text" name="user" path="userName" id="usernameId"
                                         class="form-control"
                                         placeholder="Podaj login"/>
-                            <form:errors path="participantName" element="div" cssClass="error"/>
+                            <form:errors path="userName" element="div" cssClass="error"/>
                         </div>
 
                         <div class="input-group form-group">
@@ -81,7 +81,7 @@
                 </div>
                 <div class="card">
                     <div class="d-flex justify-content-center links">
-                        Nie masz konta?<a href="/participant/add">Zrejestruj się</a>
+                        Nie masz konta?<a href="/user/add">Zrejestruj się</a>
 
                     </div>
                     <div class="d-flex justify-content-center">

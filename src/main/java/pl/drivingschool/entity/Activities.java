@@ -22,7 +22,7 @@ public class Activities {
     private Date dateActivity;
 
     @ManyToOne
-    private Participant participant;
+    private User user;
 
 
     public Long getId() {

@@ -28,13 +28,13 @@
     </thead>
     <tbody>
     <tr class="row-content">
-        <c:forEach var="participants" items="${participants}">
+        <c:forEach var="user" items="${user}">
     <tr>
-        <td>${participants.firstName}</td>
-        <td>${participants.lastName}</td>
-        <td>${participants.email}</td>
-        <td>${participants.created}</td>
-        <td>${participants.activities}</td>
+        <td>${user.name}</td>
+        <td>${user.lastName}</td>
+        <td>${user.email}</td>
+        <td>${user.created}</td>
+        <td>${user.activities}</td>
 
     </tr>
 

@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.drivingschool.entity.Activities;
-import pl.drivingschool.entity.Participant;
+import pl.drivingschool.entity.User;
 import pl.drivingschool.repository.ActivitiesRepository;
-import pl.drivingschool.repository.ParticipantRepository;
+import pl.drivingschool.repository.UserRepository;
 
 import javax.validation.Valid;
 import javax.validation.Validator;
@@ -18,11 +18,11 @@ import java.util.Collection;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/participantAdm")
-public class AdminParticipController {
+@RequestMapping("/admin/userAdm")
+public class AdminUserController {
 
     @Autowired
-            ParticipantRepository participantRepository;
+    UserRepository userRepository;
 
 
     @Autowired
@@ -49,33 +49,33 @@ public class AdminParticipController {
     @GetMapping("/add")
     public String showParticipant(Model model) {
 
-        model.addAttribute("participant", new Participant());
+        model.addAttribute("user", new User());
 
-        return "participantAdm";
+        return "userAdm";
 
     }
 
     @PostMapping("/add")
-    public String addParticipant(@ModelAttribute @Valid Participant participant, @ModelAttribute  Activities activities, BindingResult bindingResult) {
+    public String addParticipant(@ModelAttribute @Valid User user, @ModelAttribute  Activities activities, BindingResult bindingResult) {
 
-        Participant participant1 = participantRepository.findByEmail(participant.getEmail());
+        User user1 = userRepository.findByEmail(user.getEmail());
 
-        if (participant1 != null) {
+        if (user1 != null) {
             bindingResult.rejectValue("email", "error.email", "Juz istnieje taki uczestnik");
 
-            return "participantAdm";
+            return "userAdm";
 
         }
         else if (bindingResult.hasErrors()) {
 
-            return "participantAdm";
+            return "userAdm";
         } else {
 
-           participant.setPassword(BCrypt.hashpw(participant.getPassword(), BCrypt.gensalt()));
-            participantRepository.save(participant);
+           user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            userRepository.save(user);
 
             activitiesRepository.save(activities);
-            participant.setEnabled(1);
+            user.setEnabled(1);
 
             return "redirect:/admin";
 
@@ -90,16 +90,16 @@ public class AdminParticipController {
     public String updateParticipant(@PathVariable Long id, Model model) {
 
 
-        Participant participant = participantRepository.findParticipantById(id);
-        model.addAttribute("participant", participant);
+        User user = userRepository.findUserById(id);
+        model.addAttribute("user", user);
 
-        return "participant";
+        return "user";
     }
 
     @PostMapping("/update/{id}")
-    public String updateParticipant(@PathVariable Long id, @ModelAttribute Participant participant) {
+    public String updateParticipant(@PathVariable Long id, @ModelAttribute User user) {
 
-        participantRepository.save(participant);
+        userRepository.save(user);
 
         return "redirect:../all";
 
@@ -110,10 +110,10 @@ public class AdminParticipController {
     @GetMapping("/all")
     public String allParticipants(Model model) {
 
-        List<Participant> participantList = participantRepository.findAll();
-        model.addAttribute("participants", participantList);
+        List<User> userList = userRepository.findAll();
+        model.addAttribute("user", userList);
 
-        return "participantListAdm";
+        return "userListAdm";
     }
 
     //<------------------Usuwanie użytkownika-------------------->
@@ -121,7 +121,7 @@ public class AdminParticipController {
     @GetMapping("/delete/{id}")
     public String deleteParticipant(@PathVariable Long id) {
 
-        participantRepository.deleteById(id);
+        userRepository.deleteById(id);
 
         return "redirect:../all";
     }

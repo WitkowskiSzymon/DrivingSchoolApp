@@ -14,7 +14,7 @@
     <script>
         function confirmDelete(id, fullName) {
             if (confirm("Czy na pewno chcesz usunąć użytkownika \"" + fullName + "\"")) {
-                window.location.href = "/admin/participantAdm/delete/" + id;
+                window.location.href = "/admin/userAdm/delete/" + id;
             }
         }
 
@@ -29,10 +29,10 @@
                 <a class="nav-link" href="/admin">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/participantAdm/add">Dodaj kursanta</a>
+                <a class="nav-link" href="/admin/userAdm/add">Dodaj kursanta</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/admin/participantAdm/all">Lista kursantów<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/admin/userAdm/all">Lista kursantów<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/admin/instructor/add">Dodaj instruktora</a>
@@ -64,21 +64,21 @@
     </thead>
     <tbody>
     <tr class="row-content">
-        <c:forEach var="participants" items="${participants}">
+        <c:forEach var="user" items="${user}">
     <tr>
-        <td>${participants.firstName}</td>
-        <td>${participants.lastName}</td>
-        <td>${participants.email}</td>
-        <td>${participants.created}</td>
-        <td>${participants.activities}</td>
+        <td>${user.name}</td>
+        <td>${user.lastName}</td>
+        <td>${user.email}</td>
+        <td>${user.created}</td>
+        <td>${user.activities}</td>
 
                     <td>
-                        <a class="btn btn-info edit" href="/admin/participantAdm/update/${participants.id}">Edytuj
+                        <a class="btn btn-info edit" href="/admin/userAdm/update/${user.id}">Edytuj
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> </a>
 
                         &nbsp
 
-                        <a class="btn btn-danger edit" href="#" onclick="confirmDelete(${participants.id}, '${participants.fullName}')">Usuń
+                        <a class="btn btn-danger edit" href="#" onclick="confirmDelete(${user.id}, '${user.fullName}')">Usuń
                             <i class="fa fa-trash" aria-hidden="true"></i> </a>
 
                     </td>

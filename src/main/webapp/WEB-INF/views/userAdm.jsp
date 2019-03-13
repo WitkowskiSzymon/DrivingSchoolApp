@@ -20,10 +20,10 @@
                 <a class="nav-link" href="/admin">Home </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/admin/participantAdm/add">Dodaj kursanta <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/admin/userAdm/add">Dodaj kursanta <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/participantAdm/all">Lista kursantów </a>
+                <a class="nav-link" href="/admin/userAdm/all">Lista kursantów </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/admin/instructor/add">Dodaj instruktora </a>
@@ -41,11 +41,11 @@
     </div>
 </nav>
 <div>
-<form:form method="post" modelAttribute="participant">
+<form:form method="post" modelAttribute="user">
 
     <label for="usernameId">Login:</label>
-    <form:input type="text" path="participantName" id="usernameId" class="form-control"/>
-    <form:errors path="participantName" element="div" cssClass="error"/>
+    <form:input type="text" path="userName" id="usernameId" class="form-control"/>
+    <form:errors path="userName" element="div" cssClass="error"/>
 
 
     <label for="passwordId">Hasło:</label>
@@ -56,8 +56,8 @@
 
     <label for="firstNameId">Imię</label>
 
-    <form:input type="text" path="firstName" id="firstNameId" class="form-control"/>
-    <form:errors path="firstName" element="div" cssClass="error"/>
+    <form:input type="text" path="name" id="firstNameId" class="form-control"/>
+    <form:errors path="name" element="div" cssClass="error"/>
 
 
     <label for="lastNameId">Nazwisko</label>
