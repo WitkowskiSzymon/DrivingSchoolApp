@@ -5,5 +5,5 @@ import pl.drivingschool.entity.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-//    Role findRoleById(Long id);
+    Role findByRole(String role);
 }

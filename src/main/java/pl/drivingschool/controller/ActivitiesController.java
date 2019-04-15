@@ -3,9 +3,12 @@ package pl.drivingschool.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import pl.drivingschool.entity.Activities;
-import pl.drivingschool.repository.ActivitiesRepository;
+import pl.drivingschool.service.ActivitiesService;
 
 import java.util.List;
 
@@ -13,12 +16,10 @@ import java.util.List;
 @RequestMapping("/courses")
 public class ActivitiesController {
 
+
     @Autowired
-    ActivitiesRepository activitiesRepository;
+    ActivitiesService activitiesService;
 
-
-
-    // <----------------------------Dodawanie kursow------------------->
 
     @GetMapping("/add")
     public String showActivity(Model model) {
@@ -26,25 +27,20 @@ public class ActivitiesController {
         model.addAttribute("activities", new Activities());
 
         return "courses";
-
     }
 
     @PostMapping("/add")
     public String addActivity(@ModelAttribute Activities activities) {
 
-        activitiesRepository.save(activities);
+        activitiesService.createActivity(activities);
 
         return "redirect:all";
-
     }
-
-
-//<-------------------Lista kursow---------------->
 
     @GetMapping("/all")
     public String allActivity(Model model) {
 
-        List<Activities> activitiesList = activitiesRepository.findAll();
+        List<Activities> activitiesList = activitiesService.findActivities();
         model.addAttribute("activities", activitiesList);
 
         return "activityList";

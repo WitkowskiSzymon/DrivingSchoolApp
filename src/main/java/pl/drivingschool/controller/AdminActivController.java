@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.drivingschool.entity.Activities;
-import pl.drivingschool.repository.ActivitiesRepository;
+import pl.drivingschool.service.ActivitiesService;
 
 import java.util.List;
 
@@ -13,12 +13,10 @@ import java.util.List;
 @RequestMapping("/admin/courses")
 public class AdminActivController {
 
+
     @Autowired
-            ActivitiesRepository activitiesRepository;
+    ActivitiesService activitiesService;
 
-
-
-    // <----------------------------Dodawanie kursow------------------->
 
     @GetMapping("/add")
     public String showActivity(Model model) {
@@ -26,24 +24,20 @@ public class AdminActivController {
         model.addAttribute("activities", new Activities());
 
         return "courses";
-
     }
 
     @PostMapping("/add")
     public String addActivity(@ModelAttribute Activities activities) {
 
-        activitiesRepository.save(activities);
+        activitiesService.createActivity(activities);
 
         return "redirect:all";
-
     }
-    //<-----------------------------Edycja Kursu---------------------->
 
     @GetMapping("/update/{id}")
-    public String updateActivity(@PathVariable Long id, Model model) {
+    public String findActivitiesForUpdate(@PathVariable Long id, Model model) {
 
-
-        Activities activities = activitiesRepository.findActivitiesById(id);
+        Activities activities = activitiesService.findActivitiesForUpdate(id);
         model.addAttribute("activities", activities);
 
         return "courses" +
@@ -53,29 +47,24 @@ public class AdminActivController {
     @PostMapping("/update/{id}")
     public String updateActivity(@PathVariable Long id, @ModelAttribute Activities activities) {
 
-        activitiesRepository.save(activities);
+        activitiesService.updateActivities(id, activities);
 
         return "redirect:../all";
-
     }
-
-//<-------------------Lista kursow---------------->
 
     @GetMapping("/all")
     public String allActivity(Model model) {
 
-        List<Activities> activitiesList = activitiesRepository.findAll();
+        List<Activities> activitiesList = activitiesService.findActivities();
         model.addAttribute("activities", activitiesList);
 
         return "activityList";
     }
 
-    //<------------------Usuwanie kursow-------------------->
-
     @GetMapping("/delete/{id}")
     public String deleteActivity(@PathVariable Long id) {
 
-        activitiesRepository.deleteById(id);
+        activitiesService.deleteActivity(id);
 
         return "redirect:../all";
     }

@@ -78,7 +78,7 @@
 
                         &nbsp
 
-                        <a class="btn btn-danger edit" href="#" onclick="confirmDelete(${user.id}, '${user.fullName}')">Usuń
+                        <a class="btn btn-danger edit" href="#" onclick="confirmDelete(${user.id}, '${user.name}')">Usuń
                             <i class="fa fa-trash" aria-hidden="true"></i> </a>
 
                     </td>

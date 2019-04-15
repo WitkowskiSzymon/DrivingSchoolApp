@@ -1,11 +1,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page session="true" contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
-    <title>Login</title>
+    <title>Zaloguj się</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/main.css" rel="stylesheet">
     <title>Login Page</title>
@@ -20,38 +20,32 @@
 
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
-<body>
-<form:form name="form" method="post" modelAttribute="user" action="/login">
-    <a href="/">Strona Główna</a>
-    <div class="container">
-        <div class="d-flex justify-content-center h-50">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Logowanie</h3>
-                    <div class="card-body">
-                        <c:if test="${param.error != null}">
-                            <div class="alert alert-danger">
-                                Nieprawidłowe dane do logowania
-                            </div>
-                        </c:if>
-                        <c:if test="${param.logout != null}">
-                            <div class="alert alert-success">
-                                Właśnie się wylogowałeś
-                            </div>
-                        </c:if>
+<body onload='document.loginForm.username.focus();'>
+<a href="/">Strona Główna</a>
+<div class="container">
+    <div class="d-flex justify-content-center h-50">
+        <div class="card">
+            <div class="card-header">
+                <h3>Logowanie</h3>
+                <div class="card-body">
 
+                    <c:if test="${not empty error}">
+                        <div class="error">${error}</div>
+                        <c:if test="${not empty msg}">
+                            <div class="msg">${msg}</div>
+                        </c:if>
+                    </c:if>
+                    <form name='loginForm'
+                          action="<c:url value='/login' />" method='POST'>
 
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
 
-
                             <label for="usernameId"></label>
-                            <form:input type="text" name="user" path="userName" id="usernameId"
-                                        class="form-control"
-                                        placeholder="Podaj login"/>
-                            <form:errors path="userName" element="div" cssClass="error"/>
+                            <input type="text" name="name" path="userName" id="usernameId"
+                                   class="form-control">
                         </div>
 
                         <div class="input-group form-group">
@@ -59,43 +53,29 @@
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
                             <label for="passwordId"></label>
-                            <form:input type="password" name="password" path="password" id="passwordId"
-                                        class="form-control"
-                                        placeholder="Wpisz hasło"/>
-                            <form:errors path="password" element="div" cssClass="error"/>
+                            <input type="password" name="password" path="password" id="passwordId"
+                                   class="form-control">
+
                         </div>
 
                         <div class="form-group">
 
-                            <input type="hidden"
-                                name="${_csrf.parameterName}"
-                                value="${_csrf.token}"/>
-                            <input type="submit" value="Zaloguj" class="btn float-right login_btn"/>
+                            <input type="hidden" name="${_csrf.parameterName}"
+                                   value="${_csrf.token}"/>
+                            <input type="submit" name="submit" value="Submit" class="btn float-right login_btn"/>
                             <br>
                         </div>
 
-
-                    </div>
-
-
+                    </form>
+                    Nie masz konta?<a href="/newUser">Zrejestruj się</a>
                 </div>
-                <div class="card">
-                    <div class="d-flex justify-content-center links">
-                        Nie masz konta?<a href="/user/add">Zrejestruj się</a>
 
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <a href="#">Zapomniałeś hasła?</a>
-                    </div>
-                </div>
-                                Dodac jeszcze przycisk do wylogowania z sesji
+                <a href="#">Zapomniałeś hasła?</a>
+
+                Dodac jeszcze przycisk do wylogowania z sesji
+
             </div>
 
-
         </div>
-
-    </div>
-</form:form>
-</div>
 </body>
 </html>

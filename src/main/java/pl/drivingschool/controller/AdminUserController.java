@@ -1,6 +1,5 @@
 package pl.drivingschool.controller;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +9,7 @@ import pl.drivingschool.entity.Activities;
 import pl.drivingschool.entity.User;
 import pl.drivingschool.repository.ActivitiesRepository;
 import pl.drivingschool.repository.UserRepository;
+import pl.drivingschool.service.UserService;
 
 import javax.validation.Valid;
 import javax.validation.Validator;
@@ -20,6 +20,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/userAdm")
 public class AdminUserController {
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     UserRepository userRepository;
@@ -43,11 +46,8 @@ public class AdminUserController {
         return kursy2;
     }
 
-
-    // <----------------------------Dodawanie użytkownika------------------->
-
     @GetMapping("/add")
-    public String showParticipant(Model model) {
+    public String showUser(Model model) {
 
         model.addAttribute("user", new User());
 
@@ -56,72 +56,67 @@ public class AdminUserController {
     }
 
     @PostMapping("/add")
-    public String addParticipant(@ModelAttribute @Valid User user, @ModelAttribute  Activities activities, BindingResult bindingResult) {
+    public String addUser(@ModelAttribute @Valid User user, @ModelAttribute Activities activities, BindingResult bindingResult, String email) {
 
-        User user1 = userRepository.findByEmail(user.getEmail());
-
-        if (user1 != null) {
-            bindingResult.rejectValue("email", "error.email", "Juz istnieje taki uczestnik");
-
-            return "userAdm";
-
-        }
-        else if (bindingResult.hasErrors()) {
-
+        if (validation(user, bindingResult, email)) {
             return "userAdm";
         } else {
 
-           user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-            userRepository.save(user);
-
-            activitiesRepository.save(activities);
-            user.setEnabled(1);
+            userService.createUser(user, activities);
 
             return "redirect:/admin";
+        }
+    }
+
+    private Boolean validation(User user, BindingResult bindingResult, String email) {
+
+        User foundUser = userService.validateUser(user, email);
+
+        if (foundUser != null) {
+            bindingResult.rejectValue("email", "error.email", "Juz istnieje taki uczestnik");
+
+            return true;
+
+        } else if (bindingResult.hasErrors()) {
+
+            return true;
+
+        } else {
+            return false;
 
         }
     }
 
-
-
-    //<----------------Edycja użytkownika----------------->
-
     @GetMapping("/update/{id}")
-    public String updateParticipant(@PathVariable Long id, Model model) {
+    public String findUserForUpdate(@PathVariable Long id, Model model) {
 
-
-        User user = userRepository.findUserById(id);
+        User user = userService.findUserForUpdate(id);
         model.addAttribute("user", user);
 
         return "user";
     }
 
     @PostMapping("/update/{id}")
-    public String updateParticipant(@PathVariable Long id, @ModelAttribute User user) {
+    public String updateUser(@PathVariable Long id, @ModelAttribute User user) {
 
-        userRepository.save(user);
+        userService.updateUser(id, user);
 
         return "redirect:../all";
-
     }
 
-    //<-------------------Lista użytkowników---------------->
-
     @GetMapping("/all")
-    public String allParticipants(Model model) {
+    public String allUsers(Model model) {
 
-        List<User> userList = userRepository.findAll();
+        List<User> userList = userService.findUsers();
         model.addAttribute("user", userList);
 
         return "userListAdm";
     }
 
-    //<------------------Usuwanie użytkownika-------------------->
-
     @GetMapping("/delete/{id}")
-    public String deleteParticipant(@PathVariable Long id) {
+    public String deleteUser(@PathVariable Long id) {
 
-        userRepository.deleteById(id);
+        userService.deleteUser(id);
 
         return "redirect:../all";
     }

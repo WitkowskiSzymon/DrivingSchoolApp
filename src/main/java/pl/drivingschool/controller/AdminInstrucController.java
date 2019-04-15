@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.drivingschool.entity.Instructor;
 import pl.drivingschool.repository.InstructorRepository;
+import pl.drivingschool.service.InstructorService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -17,10 +18,11 @@ import java.util.List;
 public class AdminInstrucController {
 
     @Autowired
-            InstructorRepository instructorRepository;
+    InstructorService instructorService;
 
+    @Autowired
+    InstructorRepository instructorRepository;
 
-    // <----------------------------Dodawanie instruktora------------------->
 
     @GetMapping("/add")
     public String showInstructor(Model model) {
@@ -28,7 +30,6 @@ public class AdminInstrucController {
         model.addAttribute("instructor", new Instructor());
 
         return "instructor";
-
     }
 
     @PostMapping("/add")
@@ -38,22 +39,17 @@ public class AdminInstrucController {
 
             return "instructor";
         } else {
-            instructorRepository.save(instructor);
+            instructorService.createInstructor(instructor);
 
             return "redirect:all";
-
         }
     }
 
-    //<--------------------------------------------------------------------------_>
-
-    //<----------------Edycja instruktora----------------->
-
     @GetMapping("/update/{id}")
-    public String updateInstructor(@PathVariable Long id, Model model) {
+    public String findInstructorForUpdate(@PathVariable Long id, Model model) {
 
 
-        Instructor instructor= instructorRepository.findInstructorById(id);
+        Instructor instructor= instructorService.findInstructorForUpdate(id);
         model.addAttribute("instructor", instructor);
 
         return "instructor";
@@ -62,30 +58,24 @@ public class AdminInstrucController {
     @PostMapping("/update/{id}")
     public String updateInstructor(@PathVariable Long id, @ModelAttribute Instructor instructor) {
 
-        instructorRepository.save(instructor);
+        instructorService.updateInstructor(id, instructor);
 
         return "redirect:../all";
-
     }
-
-    //<------------------------lista instruktorow------------------->
-
 
     @GetMapping("/all")
     public String allInstructors(Model model) {
 
-        List<Instructor> instructorList = instructorRepository.findAll();
+        List<Instructor> instructorList = instructorService.findInstructors();
         model.addAttribute("instructors", instructorList);
 
         return "instructorListAdm";
     }
 
-    //<-----------------------Usuwanie instruktora---------------->
-
     @GetMapping("/delete/{id}")
     public String deleteInstructor(@PathVariable Long id) {
 
-        instructorRepository.deleteById(id);
+        instructorService.deleteInstructor(id);
 
         return "redirect:../all";
     }

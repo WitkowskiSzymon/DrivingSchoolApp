@@ -14,15 +14,12 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-//@Data
-//@Builder
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Builder.Default
     @ManyToMany
     @JoinTable(name="User_Role", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set <Role>roles = new HashSet<Role>();
@@ -54,7 +51,6 @@ public class User {
     @CreationTimestamp
     private LocalDate created;
 
-//    @Getter
     @Transient
     private String fullName;
 

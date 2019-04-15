@@ -8,6 +8,7 @@ import pl.drivingschool.entity.User;
 import pl.drivingschool.repository.RoleRepository;
 import pl.drivingschool.repository.UserRepository;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 
 @Component
@@ -24,24 +25,24 @@ public class RunAtStart {
         this.roleRepository = roleRepository;
     }
 
-//    @PostConstruct
+   @PostConstruct
     public void runAtStart(){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         User user1 =new User();
         User user2 = new User();
 
-        user1.setName("Adam");
-        user1.setLastName("Kowal");
-        user1.setEmail("a.kowal@gmail.com");
+        user1.setName("Szymon");
+        user1.setLastName("Witkowski");
+        user1.setEmail("szymonwit1988@gmail.com");
         user1.setPassword(bCryptPasswordEncoder.encode("Haslo12"));
         user1.setCreated(LocalDate.of(2019,03,07));
-        user1.setUserName("kowala12");
-        user1.setFullName("Adam Kowal");
+        user1.setUserName("simon88");
+        user1.setFullName("Szymon witkowski");
         user1.setActive(true);
 
-        user2.setName("Adam1");
-        user2.setLastName("Kowal1");
+        user2.setName("Adam");
+        user2.setLastName("Kowal");
         user2.setEmail("a.kowal1@gmail.com");
         user2.setPassword(bCryptPasswordEncoder.encode("Haslo22"));
         user2.setCreated(LocalDate.of(2019,03,06));
